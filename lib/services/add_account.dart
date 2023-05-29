@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jeepney/utils/const.dart';
 
 Future addAccount(email, password) async {
-  final docUser = FirebaseFirestore.instance.collection('Users').doc();
+  final docUser = FirebaseFirestore.instance.collection('Users').doc(userId);
 
   final json = {
     'email': email,

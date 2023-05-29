@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jeepney/screens/auth/login_page.dart';
+import 'package:jeepney/widgets/drawer_widget.dart';
 import 'package:jeepney/widgets/text_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,13 +18,53 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(),
+      drawer: const DrawerWidget(),
       appBar: AppBar(
-        title: TextRegular(text: 'Jeepney', fontSize: 18, color: Colors.white),
+        title: TextRegular(
+            text: 'Jeepney Stop System', fontSize: 18, color: Colors.white),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        title: const Text(
+                          'Logout Confirmation',
+                          style: TextStyle(
+                              fontFamily: 'QBold', fontWeight: FontWeight.bold),
+                        ),
+                        content: const Text(
+                          'Are you sure you want to Logout?',
+                          style: TextStyle(fontFamily: 'QRegular'),
+                        ),
+                        actions: <Widget>[
+                          MaterialButton(
+                            onPressed: () => Navigator.of(context).pop(true),
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                  fontFamily: 'QRegular',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          MaterialButton(
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut();
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()));
+                            },
+                            child: const Text(
+                              'Continue',
+                              style: TextStyle(
+                                  fontFamily: 'QRegular',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ));
+            },
             icon: const Icon(
               Icons.logout,
             ),
@@ -49,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 decoration: const InputDecoration(
-                    hintText: 'Search Location',
+                    hintText: 'Search Jeepney',
                     hintStyle: TextStyle(fontFamily: 'QRegular'),
                     border: InputBorder.none,
                     prefixIcon: Icon(

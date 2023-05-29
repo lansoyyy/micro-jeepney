@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jeepney/screens/auth/signup_screen.dart';
+import 'package:jeepney/screens/home_screen.dart';
 
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_widget.dart';
@@ -113,6 +114,9 @@ class LoginScreen extends StatelessWidget {
                                   email: email, password: password);
 
                           showToast('Logged in succesfully!');
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => const HomeScreen()));
                         } catch (e) {
                           showToast(e.toString());
                         }
