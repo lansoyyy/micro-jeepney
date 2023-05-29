@@ -152,14 +152,18 @@ class RegisterScreen extends StatelessWidget {
                   width: 150,
                   child: ButtonWidget(
                       onPressed: (() async {
-                        try {
-                          await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                                  email: email, password: password);
-                          addAccount(email, password);
-                          showToast('Account created succesfully!');
-                        } catch (e) {
-                          showToast(e.toString());
+                        if (password != confirmPassword) {
+                          showToast('Password do not match!');
+                        } else {
+                          try {
+                            await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: email, password: password);
+                            addAccount(email, password);
+                            showToast('Account created succesfully!');
+                          } catch (e) {
+                            showToast(e.toString());
+                          }
                         }
                       }),
                       label: 'Signup'),
