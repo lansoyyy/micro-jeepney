@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "290773954732",
+    "firebase_url": "https://jeepney-ed3c6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "jeepney-ed3c6",
+    "storage_bucket": "jeepney-ed3c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290773954732:android:9e779a4957bccc61dd6f09",
+        "android_client_info": {
+          "package_name": "com.example.jeepney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290773954732-4bsfkvqhqtlf7a0h2808oi1bo6l998i3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf13CROS0fJsETYdZNe9k05Wu11RFcsqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290773954732-4bsfkvqhqtlf7a0h2808oi1bo6l998i3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

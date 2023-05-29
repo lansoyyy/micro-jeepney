@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jeepney/screens/auth/login_page.dart';
 import 'package:jeepney/services/add_account.dart';
 import 'package:jeepney/widgets/toast_widget.dart';
 
@@ -160,6 +161,9 @@ class RegisterScreen extends StatelessWidget {
                                 .createUserWithEmailAndPassword(
                                     email: email, password: password);
                             addAccount(email, password);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()));
                             showToast('Account created succesfully!');
                           } catch (e) {
                             showToast(e.toString());
