@@ -1,11 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jeepney/screens/auth/signup_screen.dart';
 
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_widget.dart';
-import '../home_screen.dart';
+import '../../widgets/toast_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   final box = GetStorage();
@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                         prefixText: '',
                         border: InputBorder.none,
-                        hintText: '    Username',
+                        hintText: '    Email',
                         hintStyle: TextStyle(
                           color: Colors.grey,
                           fontFamily: 'QRegular',
@@ -106,15 +106,15 @@ class LoginScreen extends StatelessWidget {
                 child: SizedBox(
                   width: 150,
                   child: ButtonWidget(
-                      onPressed: (() {
-                        if (box.read('email') != email ||
-                            box.read('password') != password) {
-                          Fluttertoast.showToast(msg: 'Invalid Account!');
-                        } else {
-                          Fluttertoast.showToast(msg: 'Logged in!');
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()));
+                      onPressed: (() async {
+                        try {
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: email, password: password);
+
+                          showToast('Logged in succesfully!');
+                        } catch (e) {
+                          showToast(e.toString());
                         }
                       }),
                       label: 'Login'),

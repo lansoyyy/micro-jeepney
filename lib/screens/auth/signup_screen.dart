@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jeepney/services/add_account.dart';
+import 'package:jeepney/widgets/toast_widget.dart';
 
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_widget.dart';
@@ -147,7 +150,19 @@ class RegisterScreen extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: SizedBox(
                   width: 150,
-                  child: ButtonWidget(onPressed: (() {}), label: 'Signup'),
+                  child: ButtonWidget(
+                      onPressed: (() async {
+                        try {
+                          await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                                  email: email, password: password);
+                          addAccount(email, password);
+                          showToast('Account created succesfully!');
+                        } catch (e) {
+                          showToast(e.toString());
+                        }
+                      }),
+                      label: 'Signup'),
                 ),
               ),
             ),
