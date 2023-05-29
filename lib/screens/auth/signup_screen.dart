@@ -10,9 +10,6 @@ class RegisterScreen extends StatelessWidget {
 
   late String password = '';
   late String confirmPassword = '';
-  late String firstName = '';
-  late String lastName = '';
-  late String address = '';
 
   RegisterScreen({super.key});
   @override
@@ -28,7 +25,7 @@ class RegisterScreen extends StatelessWidget {
             Stack(
               children: [
                 Image.asset(
-                  'assets/images/veges.png',
+                  'assets/images/logo.png',
                   fit: BoxFit.cover,
                 ),
                 Padding(
@@ -45,12 +42,8 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ],
             ),
-            TextBold(
-                text: 'Crop ', fontSize: 42, color: const Color(0xff4E7B02)),
-            TextBold(
-                text: 'Analytical System',
-                fontSize: 42,
-                color: const Color(0xff4E7B02)),
+            TextBold(text: 'Jeepney ', fontSize: 42, color: Colors.blue),
+            TextBold(text: 'Stop System', fontSize: 42, color: Colors.blue),
             const SizedBox(
               height: 20,
             ),
@@ -80,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                         prefixText: '',
                         border: InputBorder.none,
-                        hintText: '    Username',
+                        hintText: '    Email',
                         hintStyle: TextStyle(
                           color: Colors.grey,
                           fontFamily: 'QRegular',
@@ -137,87 +130,6 @@ class RegisterScreen extends StatelessWidget {
                         prefixText: '',
                         border: InputBorder.none,
                         hintText: '    Confirm Password',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'QRegular',
-                        )),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: Card(
-                elevation: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: TextFormField(
-                    onChanged: ((value) {
-                      firstName = value;
-                    }),
-                    decoration: const InputDecoration(
-                        prefixText: '',
-                        border: InputBorder.none,
-                        hintText: '    Firstname',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'QRegular',
-                        )),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: Card(
-                elevation: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: TextFormField(
-                    onChanged: ((value) {
-                      lastName = value;
-                    }),
-                    decoration: const InputDecoration(
-                        prefixText: '',
-                        border: InputBorder.none,
-                        hintText: '    Lastname',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'QRegular',
-                        )),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: Card(
-                elevation: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: TextFormField(
-                    onChanged: ((value) {
-                      address = value;
-                    }),
-                    decoration: const InputDecoration(
-                        prefixText: '',
-                        border: InputBorder.none,
-                        hintText: '    Address',
                         hintStyle: TextStyle(
                           color: Colors.grey,
                           fontFamily: 'QRegular',

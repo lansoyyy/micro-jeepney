@@ -26,15 +26,11 @@ class LoginScreen extends StatelessWidget {
               height: 20,
             ),
             Image.asset(
-              'assets/images/veges.png',
+              'assets/images/logo.png',
               fit: BoxFit.cover,
             ),
-            TextBold(
-                text: 'Crop ', fontSize: 42, color: const Color(0xff4E7B02)),
-            TextBold(
-                text: 'Analytical System',
-                fontSize: 42,
-                color: const Color(0xff4E7B02)),
+            TextBold(text: 'Jeepney ', fontSize: 42, color: Colors.blue),
+            TextBold(text: 'Stop System', fontSize: 42, color: Colors.blue),
             const SizedBox(
               height: 20,
             ),
