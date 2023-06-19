@@ -92,7 +92,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   });
                 },
                 decoration: const InputDecoration(
-                    hintText: 'Search Jeepney',
+                    hintText: 'Search Passenger',
                     hintStyle: TextStyle(fontFamily: 'QRegular'),
                     border: InputBorder.none,
                     prefixIcon: Icon(
@@ -111,7 +111,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextBold(
-                      text: 'Jeepney No.', fontSize: 16, color: Colors.black),
+                      text: 'Passenger Name',
+                      fontSize: 16,
+                      color: Colors.black),
                   TextRegular(
                       text: 'Proximity', fontSize: 14, color: Colors.black),
                 ],
@@ -128,7 +130,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                     child: Card(
                       child: ListTile(
                         leading: TextBold(
-                            text: 'Jeepney #$index',
+                            text: 'John Doe',
                             fontSize: 14,
                             color: Colors.black),
                         trailing: TextRegular(
