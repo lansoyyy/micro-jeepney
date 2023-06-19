@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jeepney/screens/auth/signup_screen.dart';
+import 'package:jeepney/screens/driver_auth.dart/login_page.dart';
 import 'package:jeepney/screens/home_screen.dart';
 
 import '../../widgets/button_widget.dart';
@@ -142,9 +143,15 @@ class LoginScreen extends StatelessWidget {
                         text: 'Create now', fontSize: 14, color: Colors.black))
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            TextButton(
+                onPressed: (() {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DriverLoginScreen()));
+                }),
+                child: TextBold(
+                    text: 'Continue as Driver',
+                    fontSize: 14,
+                    color: Colors.black)),
             const SizedBox(
               height: 30,
             ),

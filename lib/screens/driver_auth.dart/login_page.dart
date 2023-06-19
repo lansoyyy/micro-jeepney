@@ -39,8 +39,8 @@ class DriverLoginScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 50),
               child: Align(
                 alignment: Alignment.bottomLeft,
-                child:
-                    TextBold(text: 'Login', fontSize: 18, color: Colors.black),
+                child: TextBold(
+                    text: 'Login as Driver', fontSize: 18, color: Colors.black),
               ),
             ),
             const SizedBox(
@@ -61,7 +61,7 @@ class DriverLoginScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                         prefixText: '',
                         border: InputBorder.none,
-                        hintText: '    Email',
+                        hintText: '    Username',
                         hintStyle: TextStyle(
                           color: Colors.grey,
                           fontFamily: 'QRegular',
@@ -111,7 +111,8 @@ class DriverLoginScreen extends StatelessWidget {
                         try {
                           await FirebaseAuth.instance
                               .signInWithEmailAndPassword(
-                                  email: email, password: password);
+                                  email: '$email@driver.com',
+                                  password: password);
 
                           showToast('Logged in succesfully!');
                           Navigator.of(context).pushReplacement(

@@ -55,8 +55,10 @@ class DriverRegisterScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 50),
               child: Align(
                 alignment: Alignment.bottomLeft,
-                child:
-                    TextBold(text: 'Signup', fontSize: 18, color: Colors.black),
+                child: TextBold(
+                    text: 'Signup as Driver',
+                    fontSize: 18,
+                    color: Colors.black),
               ),
             ),
             const SizedBox(
@@ -77,7 +79,7 @@ class DriverRegisterScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                         prefixText: '',
                         border: InputBorder.none,
-                        hintText: '    Email',
+                        hintText: '    Username',
                         hintStyle: TextStyle(
                           color: Colors.grey,
                           fontFamily: 'QRegular',
@@ -159,7 +161,8 @@ class DriverRegisterScreen extends StatelessWidget {
                           try {
                             await FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
-                                    email: email, password: password);
+                                    email: '$email@driver.com',
+                                    password: password);
                             addAccount(email, password);
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(

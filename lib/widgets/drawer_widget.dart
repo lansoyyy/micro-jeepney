@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jeepney/screens/auth/login_page.dart';
 import 'package:jeepney/screens/home_screen.dart';
 import 'package:jeepney/utils/const.dart';
 import 'package:jeepney/widgets/text_widget.dart';
@@ -97,11 +99,12 @@ class _MyDrawerState extends State<DrawerWidget> {
                                     ),
                                   ),
                                   MaterialButton(
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      await FirebaseAuth.instance.signOut();
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const HomeScreen()));
+                                                  LoginScreen()));
                                     },
                                     child: const Text(
                                       'Continue',
