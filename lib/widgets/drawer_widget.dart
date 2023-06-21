@@ -41,7 +41,9 @@ class _MyDrawerState extends State<DrawerWidget> {
                       color: Colors.blue,
                     ),
                     accountEmail: TextRegular(
-                        text: 'Jeepney Driver',
+                        text: data['usertype'] == 'Driver'
+                            ? 'Jeepney Driver'
+                            : data['email'],
                         fontSize: 12,
                         color: Colors.white),
                     accountName: TextBold(
@@ -107,7 +109,7 @@ class _MyDrawerState extends State<DrawerWidget> {
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  LoginScreen()));
+                                                  const LoginScreen()));
                                     },
                                     child: const Text(
                                       'Continue',

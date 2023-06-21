@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:jeepney/screens/auth/login_page.dart';
 import 'package:jeepney/widgets/drawer_widget.dart';
 import 'package:jeepney/widgets/text_widget.dart';
 import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 
 import '../plugin/location.dart';
+import '../widgets/toast_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,11 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  var _value = false;
   String query = '';
 
   final queryController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final Stream<DocumentSnapshot> userData = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .snapshots();
     return Scaffold(
       drawer: const DrawerWidget(),
       appBar: AppBar(
@@ -45,51 +50,51 @@ class _HomeScreenState extends State<HomeScreen> {
             text: 'Jeepney Stop System', fontSize: 18, color: Colors.white),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        title: const Text(
-                          'Logout Confirmation',
-                          style: TextStyle(
-                              fontFamily: 'QBold', fontWeight: FontWeight.bold),
-                        ),
-                        content: const Text(
-                          'Are you sure you want to Logout?',
-                          style: TextStyle(fontFamily: 'QRegular'),
-                        ),
-                        actions: <Widget>[
-                          MaterialButton(
-                            onPressed: () => Navigator.of(context).pop(true),
-                            child: const Text(
-                              'Close',
-                              style: TextStyle(
-                                  fontFamily: 'QRegular',
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          MaterialButton(
-                            onPressed: () async {
-                              await FirebaseAuth.instance.signOut();
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen()));
-                            },
-                            child: const Text(
-                              'Continue',
-                              style: TextStyle(
-                                  fontFamily: 'QRegular',
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ));
-            },
-            icon: const Icon(
-              Icons.logout,
-            ),
-          ),
+          StreamBuilder<DocumentSnapshot>(
+              stream: userData,
+              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (!snapshot.hasData) {
+                  return const SizedBox();
+                } else if (snapshot.hasError) {
+                  return const Center(child: Text('Something went wrong'));
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const SizedBox();
+                }
+                dynamic data = snapshot.data;
+                return Container(
+                  padding: const EdgeInsets.only(right: 20),
+                  width: 50,
+                  child: SwitchListTile(
+                    activeColor: Colors.white,
+                    value: data['isActive'],
+                    onChanged: (value) {
+                      setState(() {
+                        _value = value;
+                        if (_value == true) {
+                          FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(FirebaseAuth.instance.currentUser!.uid)
+                              .update({
+                            'isActive': true,
+                          });
+                          showToast(
+                              'Status: Active\nJeepney Drivers will now see your location');
+                        } else {
+                          FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(FirebaseAuth.instance.currentUser!.uid)
+                              .update({
+                            'isActive': false,
+                          });
+                          showToast(
+                              'Status: Inactive\nJeepney Drivers will not be able to see your location');
+                        }
+                      });
+                    },
+                  ),
+                );
+              }),
         ],
       ),
       body: Center(
@@ -147,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 stream: FirebaseFirestore.instance
                     .collection('Users')
                     .where('usertype', isEqualTo: 'Driver')
+                    .where('isActive', isEqualTo: true)
                     .where('name',
                         isGreaterThanOrEqualTo:
                             toBeginningOfSentenceCase(query))
