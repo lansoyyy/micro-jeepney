@@ -163,7 +163,7 @@ class DriverRegisterScreen extends StatelessWidget {
                                 .createUserWithEmailAndPassword(
                                     email: '$email@driver.com',
                                     password: password);
-                            addAccount(email, password);
+                            addAccount(email, password, 'Driver');
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => DriverLoginScreen()));

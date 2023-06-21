@@ -160,7 +160,7 @@ class RegisterScreen extends StatelessWidget {
                             await FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                                     email: email, password: password);
-                            addAccount(email, password);
+                            addAccount(email, password, 'User');
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => LoginScreen()));
