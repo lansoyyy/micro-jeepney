@@ -5,18 +5,33 @@ import 'package:jeepney/screens/auth/signup_screen.dart';
 import 'package:jeepney/screens/driver_auth.dart/login_page.dart';
 import 'package:jeepney/screens/home_screen.dart';
 
+import '../../plugin/location.dart';
 import '../../widgets/button_widget.dart';
 import '../../widgets/text_widget.dart';
 import '../../widgets/toast_widget.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    super.initState();
+    determinePosition();
+  }
+
   final box = GetStorage();
+
   late String email = '';
 
   late String password = '';
+
   late String adminPassword = '';
 
-  LoginScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

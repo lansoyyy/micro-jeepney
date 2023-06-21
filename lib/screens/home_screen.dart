@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:jeepney/screens/auth/login_page.dart';
 import 'package:jeepney/widgets/drawer_widget.dart';
 import 'package:jeepney/widgets/text_widget.dart';
 import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
+
+import '../plugin/location.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +17,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    determinePosition();
+    Geolocator.getCurrentPosition().then((position) {
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        'location': {'lat': position.latitude, 'long': position.longitude},
+      });
+    }).catchError((error) {
+      print('Error getting location: $error');
+    });
+  }
+
   String query = '';
 
   final queryController = TextEditingController();
