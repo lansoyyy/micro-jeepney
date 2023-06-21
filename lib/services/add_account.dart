@@ -13,7 +13,8 @@ Future addAccount(email, password, usertype, name) async {
     'coordinates': {'lat': 0.00, 'long': 0.00},
     'id': FirebaseAuth.instance.currentUser!.uid,
     'usertype': usertype,
-    'name': name
+    'name': name,
+    'isActive': true,
   };
 
   await docUser.set(json);
