@@ -10,6 +10,7 @@ import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 
 import '../plugin/location.dart';
 import '../widgets/toast_widget.dart';
+import 'auth/login_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -79,6 +80,72 @@ class _HomeScreenState extends State<HomeScreen> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .snapshots();
     return Scaffold(
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              showToast('Application refreshed');
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            },
+            child: const Icon(Icons.refresh),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        title: const Text(
+                          'Delete Account Confirmation',
+                          style: TextStyle(
+                              fontFamily: 'QBold',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red),
+                        ),
+                        content: const Text(
+                          'Are you sure you want to delete your Account?',
+                          style: TextStyle(fontFamily: 'QRegular'),
+                        ),
+                        actions: <Widget>[
+                          MaterialButton(
+                            onPressed: () => Navigator.of(context).pop(true),
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                  fontFamily: 'QRegular',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          MaterialButton(
+                            onPressed: () async {
+                              await FirebaseAuth.instance.currentUser!.delete();
+
+                              showToast(
+                                  'Your account has been permanently deleted');
+
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginScreen()));
+                            },
+                            child: const Text(
+                              'Continue',
+                              style: TextStyle(
+                                  fontFamily: 'QRegular',
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ));
+            },
+            child: const Icon(Icons.no_accounts_outlined),
+          ),
+        ],
+      ),
       drawer: const DrawerWidget(),
       appBar: AppBar(
         title: TextRegular(
