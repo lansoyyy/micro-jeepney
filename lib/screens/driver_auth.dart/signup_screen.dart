@@ -14,6 +14,7 @@ class DriverRegisterScreen extends StatelessWidget {
 
   late String password = '';
   late String confirmPassword = '';
+  late String name = '';
 
   DriverRegisterScreen({super.key});
   @override
@@ -63,6 +64,33 @@ class DriverRegisterScreen extends StatelessWidget {
             ),
             const SizedBox(
               height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Card(
+                elevation: 3,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: TextFormField(
+                    onChanged: ((value) {
+                      name = value;
+                    }),
+                    decoration: const InputDecoration(
+                        prefixText: '',
+                        border: InputBorder.none,
+                        hintText: "    Jeepney Driver's Name",
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontFamily: 'QRegular',
+                        )),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
@@ -163,7 +191,7 @@ class DriverRegisterScreen extends StatelessWidget {
                                 .createUserWithEmailAndPassword(
                                     email: '$email@driver.com',
                                     password: password);
-                            addAccount(email, password, 'Driver');
+                            addAccount(email, password, 'Driver', name);
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => DriverLoginScreen()));

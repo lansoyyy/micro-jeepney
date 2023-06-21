@@ -14,6 +14,7 @@ class RegisterScreen extends StatelessWidget {
 
   late String password = '';
   late String confirmPassword = '';
+  late String name = '';
 
   RegisterScreen({super.key});
   @override
@@ -61,6 +62,33 @@ class RegisterScreen extends StatelessWidget {
             ),
             const SizedBox(
               height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Card(
+                elevation: 3,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: TextFormField(
+                    onChanged: ((value) {
+                      name = value;
+                    }),
+                    decoration: const InputDecoration(
+                        prefixText: '',
+                        border: InputBorder.none,
+                        hintText: '    Name',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontFamily: 'QRegular',
+                        )),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
@@ -160,7 +188,7 @@ class RegisterScreen extends StatelessWidget {
                             await FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                                     email: email, password: password);
-                            addAccount(email, password, 'User');
+                            addAccount(email, password, 'User', name);
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (context) => LoginScreen()));

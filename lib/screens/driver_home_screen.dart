@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jeepney/screens/auth/login_page.dart';
 import 'package:jeepney/widgets/drawer_widget.dart';
 import 'package:jeepney/widgets/text_widget.dart';
+import 'package:intl/intl.dart' show DateFormat, toBeginningOfSentenceCase;
 
 class DriverHomeScreen extends StatefulWidget {
   const DriverHomeScreen({super.key});
@@ -122,27 +124,58 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             const SizedBox(
               height: 10,
             ),
-            Expanded(
-              child: SizedBox(
-                child: ListView.builder(itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Card(
-                      child: ListTile(
-                        leading: TextBold(
-                            text: 'John Doe',
-                            fontSize: 14,
-                            color: Colors.black),
-                        trailing: TextRegular(
-                            text: '60ms away',
-                            fontSize: 14,
-                            color: Colors.grey),
-                      ),
+            StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('Users')
+                    .where('usertype', isEqualTo: 'User')
+                    .where('name',
+                        isGreaterThanOrEqualTo:
+                            toBeginningOfSentenceCase(query))
+                    .where('name',
+                        isLessThan: '${toBeginningOfSentenceCase(query)}z')
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    print(snapshot.error);
+                    return const Center(child: Text('Error'));
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 50),
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        color: Colors.black,
+                      )),
+                    );
+                  }
+
+                  final data = snapshot.requireData;
+                  return Expanded(
+                    child: SizedBox(
+                      child: ListView.builder(
+                          itemCount: data.docs.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              child: Card(
+                                child: ListTile(
+                                  leading: TextBold(
+                                      text: data.docs[index]['name'],
+                                      fontSize: 14,
+                                      color: Colors.black),
+                                  trailing: TextRegular(
+                                      text: '60ms away',
+                                      fontSize: 14,
+                                      color: Colors.grey),
+                                ),
+                              ),
+                            );
+                          }),
                     ),
                   );
-                }),
-              ),
-            )
+                })
           ],
         ),
       ),

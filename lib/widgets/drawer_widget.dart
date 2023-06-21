@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jeepney/screens/auth/login_page.dart';
 import 'package:jeepney/screens/home_screen.dart';
-import 'package:jeepney/utils/const.dart';
 import 'package:jeepney/widgets/text_widget.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -14,8 +13,10 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<DrawerWidget> {
-  final Stream<DocumentSnapshot> userData =
-      FirebaseFirestore.instance.collection('Users').doc(userId).snapshots();
+  final Stream<DocumentSnapshot> userData = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .snapshots();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
@@ -39,10 +40,12 @@ class _MyDrawerState extends State<DrawerWidget> {
                     decoration: const BoxDecoration(
                       color: Colors.blue,
                     ),
-                    accountEmail:
-                        TextRegular(text: '', fontSize: 0, color: Colors.white),
+                    accountEmail: TextRegular(
+                        text: 'Jeepney Driver',
+                        fontSize: 12,
+                        color: Colors.white),
                     accountName: TextBold(
-                      text: data['email'],
+                      text: data['name'],
                       fontSize: 14,
                       color: Colors.white,
                     ),
