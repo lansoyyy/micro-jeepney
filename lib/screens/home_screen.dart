@@ -288,23 +288,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: ListView.builder(
                                 itemCount: data.docs.length,
                                 itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 20, right: 20),
-                                    child: Card(
-                                      child: ListTile(
-                                        leading: TextBold(
-                                            text: data.docs[index]['name'],
-                                            fontSize: 14,
-                                            color: Colors.black),
-                                        trailing: TextRegular(
-                                            text:
-                                                '${calculateDistance(myLat, myLong, lat, long).toStringAsFixed(2)}kms away',
-                                            fontSize: 14,
-                                            color: Colors.grey),
-                                      ),
-                                    ),
-                                  );
+                                  return calculateDistance(
+                                              myLat, myLong, lat, long) <
+                                          0.20
+                                      ? Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20, right: 20),
+                                          child: Card(
+                                            child: ListTile(
+                                              leading: TextBold(
+                                                  text: data.docs[index]
+                                                      ['name'],
+                                                  fontSize: 14,
+                                                  color: Colors.black),
+                                              trailing: TextRegular(
+                                                  text:
+                                                      '${calculateDistance(myLat, myLong, lat, long).toStringAsFixed(2)}kms away',
+                                                  fontSize: 14,
+                                                  color: Colors.grey),
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox();
                                 }),
                           ),
                         );

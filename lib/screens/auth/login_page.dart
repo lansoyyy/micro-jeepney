@@ -98,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.white),
                   child: TextFormField(
+                    obscureText: true,
                     onChanged: ((value) {
                       password = value;
                     }),
